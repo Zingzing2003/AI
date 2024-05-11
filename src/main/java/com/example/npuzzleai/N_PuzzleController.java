@@ -100,7 +100,7 @@ public class N_PuzzleController implements Initializable, Runnable {
         displayImage(null);
         progressBar.setVisible(false);
         goal1Image.setImage(new Image(Objects.requireNonNull(N_PuzzleApplication.class.getResourceAsStream("img/goal-1.png"))));
-        goal2Image.setImage(new Image(Objects.requireNonNull(N_PuzzleApplication.class.getResourceAsStream("img/goal-2.png"))));
+       // goal2Image.setImage(new Image(Objects.requireNonNull(N_PuzzleApplication.class.getResourceAsStream("img/goal-2.png"))));
     }
 
     // Luồng chạy lời giải
@@ -429,7 +429,7 @@ public class N_PuzzleController implements Initializable, Runnable {
         algorithmMenu.setDisable(false);
         progressBar.setVisible(false);
         goal1.setDisable(false);
-        goal2.setDisable(false);
+        //goal2.setDisable(false);
     }
 
     // Disable các nút
@@ -442,7 +442,7 @@ public class N_PuzzleController implements Initializable, Runnable {
         algorithmMenu.setDisable(true);
         progressBar.setVisible(true);
         goal1.setDisable(true);
-        goal2.setDisable(true);
+       // goal2.setDisable(true);
     }
 
     // Bảng thông báo không tìm được lời giải

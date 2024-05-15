@@ -49,19 +49,11 @@ public class N_PuzzleController implements Initializable, Runnable {
     @FXML
     private Button jumbleBtn;
     @FXML
-    private Button addImage;
-    @FXML
-    private Button addNumber;
-    @FXML
     private Button compareBtn;
-    @FXML
-    private SplitMenuButton sizeMenu;
     @FXML
     private SplitMenuButton algorithmMenu;
     @FXML
     private RadioButton goal1;
-    @FXML
-    private RadioButton goal2;
     @FXML
     private TextField stepField;
     @FXML
@@ -100,7 +92,6 @@ public class N_PuzzleController implements Initializable, Runnable {
         displayImage(null);
         progressBar.setVisible(false);
         goal1Image.setImage(new Image(Objects.requireNonNull(N_PuzzleApplication.class.getResourceAsStream("img/goal-1.png"))));
-       // goal2Image.setImage(new Image(Objects.requireNonNull(N_PuzzleApplication.class.getResourceAsStream("img/goal-2.png"))));
     }
 
     // Luồng chạy lời giải
@@ -119,23 +110,6 @@ public class N_PuzzleController implements Initializable, Runnable {
             }
         }
         Platform.runLater(this::notSolve);
-    }
-
-    @FXML
-    // Chọn size bảng
-    public void onChangeImageSize() {
-        RadioMenuItem selectedDiff = (RadioMenuItem) difficultyToggle.getSelectedToggle();
-        switch (selectedDiff.getId()) {
-            case "medium" -> size = 4;
-            case "hard" -> size = 5;
-            default -> size = 3;
-        }
-        sizeMenu.setText(selectedDiff.getText());
-        state = new State(size);
-        value = state.createGoalArray();
-        goalState = new State(size);
-        goalState.createGoalArray();
-        displayImage(image);
     }
 
     // Chọn thuật toán
@@ -181,40 +155,6 @@ public class N_PuzzleController implements Initializable, Runnable {
         }
         value = state.createGoalArray();
         goalState.createGoalArray();
-        displayImage(image);
-    }
-
-    // Button thêm ảnh
-    public void onAddImgBtnClick() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
-        );
-        File file = fileChooser.showOpenDialog(null);
-        if (file != null) {
-            image = new Image(file.toURI().toString());
-            // Thêm ảnh nhỏ
-            if (image.getHeight() > image.getWidth()) {
-                double width = image.getWidth() * 180 / image.getHeight();
-                imgView.setX((180 - width) / 2);
-            } else {
-                imgView.setX(0);
-            }
-            countStep = 0;
-            stepField.setText("0");
-            imgView.setImage(image);
-            value = state.createGoalArray();
-            displayImage(image);
-        }
-    }
-
-    // Button thêm bảng số
-    public void onAddNumberBtnClick() {
-        countStep = 0;
-        image = null;
-        stepField.setText("0");
-        imgView.setImage(null);
-        value = state.createGoalArray();
         displayImage(image);
     }
 
@@ -327,19 +267,6 @@ public class N_PuzzleController implements Initializable, Runnable {
         error = aStar.error;
     }
 
-    // Giải quyết bài toán bằng thuật toán BFS
-//    public void solveBFS() {
-//        bFS = new BFS();
-//        bFS.startNode = new Node(state, 0);
-//        bFS.goalNode = new Node(goalState, 0);
-//        bFS.solve();
-//        result = bFS.RESULT;
-//        approvedNodes = bFS.approvedNodes;
-//        totalNodes = bFS.totalNodes;
-//        solveTime = bFS.time;
-//        error = bFS.error;
-//    }
-
     // Luồng tìm kiếm lời giải
     public Thread solveThread() {
         return new Thread(() -> {
@@ -422,10 +349,7 @@ public class N_PuzzleController implements Initializable, Runnable {
     private void setEnable() {
         solveBtn.setDisable(false);
         jumbleBtn.setDisable(false);
-        addImage.setDisable(false);
-        addNumber.setDisable(false);
         compareBtn.setDisable(false);
-        sizeMenu.setDisable(false);
         algorithmMenu.setDisable(false);
         progressBar.setVisible(false);
         goal1.setDisable(false);
@@ -435,14 +359,10 @@ public class N_PuzzleController implements Initializable, Runnable {
     // Disable các nút
     private void setDisable() {
         jumbleBtn.setDisable(true);
-        addImage.setDisable(true);
-        addNumber.setDisable(true);
         compareBtn.setDisable(true);
-        sizeMenu.setDisable(true);
         algorithmMenu.setDisable(true);
         progressBar.setVisible(true);
         goal1.setDisable(true);
-       // goal2.setDisable(true);
     }
 
     // Bảng thông báo không tìm được lời giải
